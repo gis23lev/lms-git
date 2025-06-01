@@ -1,0 +1,122 @@
+<!-- usuarios/templates/usuarios/login_docente.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Docente</title>
+    <style>
+        body {
+            background-color: #E6F0FA;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        .card {
+            background-color: #ffffff;
+            padding: 28px;
+            border-radius: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .logo {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .logo img {
+            width: 120px;
+            height: 120px;
+        }
+
+        .label-container {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+
+        .label-container i {
+            margin-right: 8px;
+            color: #2D3748;
+        }
+
+        label {
+            font-size: 16px;
+            font-weight: 700;
+            color: #2D3748;
+        }
+
+        input {
+            width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #F7FAFC;
+            border: 1px solid #CBD5E0;
+            border-radius: 12px;
+            padding: 14px;
+            font-size: 16px;
+            margin-bottom: 16px;
+            color: #2D3748;
+        }
+        form {
+        padding: 0 10px;
+        }
+
+        button {
+            background-color: #2B6CB0;
+            color: #FFFFFF;
+            font-size: 17px;
+            font-weight: 600;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #265a91;
+        }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+    <!-- Puedes usar Font Awesome si deseas iconos como en React Native -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="card">
+        <div class="logo">
+            <img src="https://png.pngtree.com/png-vector/20211120/ourlarge/pngtree-university-logo-png-image_4037518.png" alt="Logo"> <!-- Cambia al path correcto -->
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <div class="label-container">
+                <i class="fas fa-user"></i><label for="nombre">Usuario:</label>
+            </div>
+            <input type="text" name="nombre" id="nombre" required>
+
+            <div class="label-container">
+                <i class="fas fa-lock"></i><label for="ci">Contraseña:</label>
+            </div>
+            <input type="password" name="ci" id="ci" required>
+
+            <button type="submit">Iniciar Sesión</button>
+        </form>
+
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+    </div>
+</body>
+</html>

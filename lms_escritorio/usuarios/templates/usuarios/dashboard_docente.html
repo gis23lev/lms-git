@@ -1,0 +1,127 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Docente</title>
+    <style>
+        body {
+            background-color: #E6F0FA;
+            font-family: Arial, sans-serif;
+            padding: 30px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            padding: 28px;
+            border-radius: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2B6CB0;
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin-top: 15px;
+            color: #2D3748;
+        }
+
+        input, textarea {
+            width: 95%;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 12px;
+            margin-top: 5px;
+            border: 1px solid #CBD5E0;
+            border-radius: 8px;
+            background-color: #F7FAFC;
+        }
+        form {
+        padding: 0 30px;
+        }
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 14px;
+            background-color: #2B6CB0;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .mensaje {
+            margin-top: 15px;
+            text-align: center;
+            color: green;
+        }
+
+        .tareas {
+            margin-top: 30px;
+        }
+
+        .tarea {
+            background: #EDF2F7;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .tarea h3 {
+            margin: 0;
+            color: #2B6CB0;
+        }
+
+        .tarea p {
+            margin: 5px 0 0;
+            color: #2D3748;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div style="text-align: right; margin-bottom: 20px;">
+    <a href="{% url 'logout_docente' %}" style="color: #2B6CB0; font-weight: bold;">Cerrar sesión</a>
+</div>
+        <h1>Bienvenido {{ nombre }}</h1>
+
+        <form method="post">
+            {% csrf_token %}
+            <label for="titulo">Título de la tarea</label>
+            <input type="text" name="titulo" id="titulo" required>
+
+            <label for="descripcion">Descripción</label>
+            <textarea name="descripcion" id="descripcion" required></textarea>
+
+            <button type="submit">Crear Tarea</button>
+        </form>
+
+        {% if mensaje %}
+            <div class="mensaje">{{ mensaje }}</div>
+        {% endif %}
+
+<div class="tareas">
+    <h2>Tareas creadas</h2>
+    {% for tarea in tareas %}
+        <div class="tarea">
+            <h3>{{ tarea.titulo }}</h3>
+            <p>{{ tarea.descripcion }}</p>
+            <form action="{% url 'eliminar_tarea' tarea.id %}" method="post" style="margin-top: 10px;">
+                {% csrf_token %}
+                <button type="submit" style="background-color: #E53E3E;">Eliminar</button>
+            </form>
+        </div>
+    {% empty %}
+        <p>No has creado ninguna tarea aún.</p>
+    {% endfor %}
+</div>
+    </div>
+</body>
+</html>

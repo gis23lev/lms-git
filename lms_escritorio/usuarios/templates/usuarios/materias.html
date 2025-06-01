@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Gestión de Materias</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        /* Mismos estilos */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background-color: #f4f6f8;
+            color: #333;
+            min-height: 100vh;
+        }
+        .sidebar {
+            position: fixed;
+            width: 240px;
+            height: 100vh;
+            background-color: #1e3a8a;
+            padding: 30px 20px;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .sidebar h2 { text-align: center; font-size: 24px; margin-bottom: 40px; }
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            color: #fff;
+            text-decoration: none;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .sidebar a:hover {
+            background-color: #3749b0;
+            transform: scale(1.03);
+        }
+        .sidebar a i { margin-right: 10px; font-size: 17px; }
+        .logout {
+            color: #ffcccc;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+        .logout:hover { color: #fff; }
+        .main {
+            margin-left: 240px;
+            padding: 40px 30px;
+        }
+        .header h1 { font-size: 28px; margin-bottom: 6px; }
+        .header p { font-size: 15px; color: #666; margin-bottom: 25px; }
+        .table-container {
+            background-color: #fff;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px;
+        }
+        table thead {
+            background-color: #1e3a8a;
+            color: #fff;
+        }
+        table th, table td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        table tr:hover { background-color: #f1f5ff; }
+        .btn {
+            background-color: #2563eb;
+            color: white;
+            padding: 8px 14px;
+            border: none;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .btn:hover { background-color: #1e40af; }
+        @media (max-width: 768px) {
+            .btn {
+                display: block;
+                width: 100%;
+                margin-bottom: 8px;
+                text-align: center;
+            }
+            td:last-child {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                flex-direction: row;
+                flex-wrap: wrap;
+                position: relative;
+                justify-content: space-evenly;
+            }
+            .main {
+                margin-left: 0;
+                padding: 20px 16px;
+            }
+            table { font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div>
+            <h2>UniGestor</h2>
+            <a href="{% url 'dashboard' %}"><i class="fas fa-tachometer-alt"></i>Inicio</a>
+            <a href="{% url 'estudiantes' %}"><i class="fas fa-user-graduate"></i>Estudiantes</a>
+            <a href="{% url 'docentes' %}"><i class="fas fa-chalkboard-teacher"></i>Profesores</a>
+            <a href="{% url 'materias' %}"><i class="fas fa-book"></i>Materias</a>
+            <a href="#"><i class="fas fa-chart-bar"></i>Reportes</a>
+        </div>
+        <a class="logout" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
+    </div>
+
+    <div class="main">
+        <div class="header">
+            <h1>Gestión de Materias</h1>
+            <p>Aquí puedes ver y administrar las materias registradas.</p>
+        </div>
+
+        <div class="table-container">
+            <a href="{% url 'crear_materia' %}" class="btn">+ Añadir Materia</a>
+            <br><br>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Código</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for materia in materias %}
+                    <tr>
+                        <td>{{ materia.nombre }}</td>
+                        <td>{{ materia.codigo }}</td>
+                        <td>
+                            <a href="{% url 'eliminar_materia' materia.id %}" class="btn" style="background-color:#dc2626;">Eliminar</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3">No hay materias registradas.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>

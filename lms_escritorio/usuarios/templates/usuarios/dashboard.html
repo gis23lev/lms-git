@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel de Administración - Universidad</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background-color: #f4f6f8;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            position: fixed;
+            width: 240px;
+            height: 100vh;
+            background-color: #1e3a8a;
+            padding: 30px 20px;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            font-size: 24px;
+            letter-spacing: 1px;
+            margin-bottom: 40px;
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            color: #fff;
+            text-decoration: none;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .sidebar a:hover {
+            background-color: #3749b0;
+            transform: scale(1.03);
+        }
+
+        .sidebar a i {
+            margin-right: 10px;
+            font-size: 17px;
+        }
+
+        .logout {
+            color: #ffcccc;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .logout:hover {
+            color: #fff;
+        }
+
+        .main {
+            margin-left: 240px;
+            padding: 40px 30px;
+            transition: margin-left 0.3s ease;
+        }
+
+        .header h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 28px 22px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+            transition: all 0.3s ease;
+            border: 1px solid #e0e0e0;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            margin-bottom: 12px;
+            font-size: 19px;
+            color: #1e3a8a;
+        }
+
+        .card p {
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        ul {
+            padding-left: 18px;
+        }
+
+        ul li {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                flex-direction: row;
+                flex-wrap: wrap;
+                height: auto;
+                width: 100%;
+                padding: 10px;
+                position: relative;
+                justify-content: space-evenly;
+            }
+
+            .sidebar h2 {
+                display: none;
+            }
+
+            .sidebar a {
+                justify-content: center;
+                margin: 8px 4px;
+                font-size: 13px;
+                padding: 10px 8px;
+                flex: 1 0 80px;
+            }
+
+            .sidebar a i {
+                margin: 0;
+                font-size: 16px;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 20px 16px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .header p {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div>
+            <h2>Universidad</h2>
+            <a href="{% url 'dashboard' %}"><i class="fas fa-tachometer-alt"></i>Inicio</a>
+            <a href="{% url 'estudiantes' %}"><i class="fas fa-user-graduate"></i>Estudiantes</a>
+            <a href="{% url 'docentes' %}"><i class="fas fa-chalkboard-teacher"></i>Profesores</a>
+            <a href="{% url 'materias' %}"><i class="fas fa-book"></i>Materias</a>
+            <a href="#"><i class="fas fa-chart-bar"></i>Reportes</a>
+        </div>
+        <a class="logout" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
+    </div>
+
+    <div class="main">
+        <div class="header">
+            <h1>Hola, {{ usuario.username }}</h1>
+            <p>Este es tu panel de control como administrador universitario.</p>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h3>Estudiantes Registrados</h3>
+                <p><strong>1,200</strong> estudiantes activos este semestre.</p>
+            </div>
+
+            <div class="card">
+                <h3>Profesores Activos</h3>
+                <p><strong>150</strong> profesores en todas las facultades.</p>
+            </div>
+
+            <div class="card">
+                <h3>Materias Ofrecidas</h3>
+                <p><strong>85</strong> materias abiertas este periodo.</p>
+            </div>
+
+            <div class="card">
+                <h3>Últimas Actualizaciones</h3>
+                <ul>
+                    <li>📅 Nuevo calendario académico disponible.</li>
+                    <li>📢 Se publicaron las becas 2025.</li>
+                    <li>📘 Curso nuevo en línea para primer ingreso.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
